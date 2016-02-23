@@ -1,68 +1,70 @@
+
+Skip to content
+This repository
+
+    Pull requests
+    Issues
+    Gist
+
+    @vuquangtuan
+
+2
+1
+
+    233
+
+juhovan/botkit forked from howdyai/botkit
+Code
+Pull requests 10
+Pulse
+Graphs
+botkit/bot.js
+76e4ff5 3 hours ago
+@juhovan juhovan Merge branch 'master' of github:/juhovan/botkit
+@benbrown
+@juhovan
+@Kasperki
+@MiguelSR
+@anonrig
+executable file 254 lines (186 sloc) 6.77 KB
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           ______     ______     ______   __  __     __     ______
           /\  == \   /\  __ \   /\__  _\ /\ \/ /    /\ \   /\__  _\
           \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  _"-.  \ \ \  \/_/\ \/
           \ \_____\  \ \_____\    \ \_\  \ \_\ \_\  \ \_\    \ \_\
            \/_____/   \/_____/     \/_/   \/_/\/_/   \/_/     \/_/
-
-
 This is a sample Slack bot built with Botkit.
-
 This bot demonstrates many of the core features of Botkit:
-
 * Connect to Slack using the real time API
 * Receive messages based on "spoken" patterns
 * Reply to messages
 * Use the conversation system to ask questions
 * Use the built in storage system to store and retrieve information
   for a user.
-
 # RUN THE BOT:
-
   Get a Bot token from Slack:
-
     -> http://my.slack.com/services/new/bot
-
   Run your bot from the command line:
-
     set token=<MY TOKEN>
 	
 	node bot.js
-
 # USE THE BOT:
-
   Find your bot inside Slack to send it a direct message.
-
   Say: "Hello"
-
   The bot will reply "Hello!"
-
   Say: "who are you?"
-
   The bot will tell you its name, where it running, and for how long.
-
   Say: "Call me <nickname>"
-
   Tell the bot your nickname. Now you are friends.
-
   Say: "who am I?"
-
   The bot will tell you your nickname, if it knows one for you.
-
   Say: "shutdown"
-
   The bot will ask if you are sure, and then shut itself down.
-
   Make sure to invite your bot into other channels using /invite @<my bot>!
-
 # EXTEND THE BOT:
-
   Botkit is has many features for building cool and useful bots!
-
   Read all about it here:
-
     -> http://howdy.ai/botkit
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
@@ -184,11 +186,11 @@ controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention'
         bot.reply(message, 'That is not a Fibonacci number!');
     }
     else {
-        //bot.reply(message, fibonacci.slice(fibonacci.length-10,fibonacci.length).join(', '));
-        for (var i = 0; i < 5; i++){
-        	fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1])       	
+for (var i = 0; i < 5; i++){
+        fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1])
+        }
+        bot.reply(message, fibonacci.slice(fibonacci.length-5,fibonacci.length).join(', '));        
     }
-    	bot.reply(message, fibonacci.slice(fibonacci.length-5,fibonacci.length).join(', '));
 });
 
 function calculateFibonacciUpto(goal) {
@@ -231,15 +233,15 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
 
     if (MathHelper.isPrime(parameter)) {
         var primes = new Array();
-        var number = parameter - 1; //+1
+        var number = parameter - 1;
 
-        while ((primes.length < 10 && number != 0) {
+        while (primes.length < 10  && number != 0) {
 
             if (MathHelper.isPrime(number)) {
                 primes.push(number);
             }
 
-            number--;//++
+            number--;
         }
 
         var reply = "";
@@ -253,4 +255,8 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
         return bot.reply(message, "your parameter: " + parameter + " is not Prime number");
     }
 });
+
+    Status API Training Shop Blog About Pricing 
+
+    © 2016 GitHub, Inc. Terms Privacy Security Contact Help 
 
