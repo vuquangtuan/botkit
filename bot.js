@@ -171,7 +171,7 @@ controller.hears(['uptime','identify yourself','who are you','what is your name'
 
 controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', function(bot, message) {
     if (message.text === 'fibonacci') {
-        bot.reply(message, '1, 1, 2, 3, 5, 8, 13, 21, 34, 55');
+        bot.reply(message, '1, 1, 2, 3, 5');
     }
 });
 
@@ -184,8 +184,11 @@ controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention'
         bot.reply(message, 'That is not a Fibonacci number!');
     }
     else {
-        bot.reply(message, fibonacci.slice(fibonacci.length-10,fibonacci.length).join(', '));
+        //bot.reply(message, fibonacci.slice(fibonacci.length-10,fibonacci.length).join(', '));
+        for (var i = 0; i < 5; i++){
+        	fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1])       	
     }
+    	bot.reply(message, fibonacci.slice(fibonacci.length-5,fibonacci.length).join(', '));
 });
 
 function calculateFibonacciUpto(goal) {
@@ -228,15 +231,15 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
 
     if (MathHelper.isPrime(parameter)) {
         var primes = new Array();
-        var number = parameter + 1;
+        var number = parameter - 1; //+1
 
-        while (primes.length < 10) {
+        while ((primes.length < 10 && number != 0) {
 
             if (MathHelper.isPrime(number)) {
                 primes.push(number);
             }
 
-            number++;
+            number--;//++
         }
 
         var reply = "";
