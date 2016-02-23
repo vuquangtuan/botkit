@@ -1,32 +1,3 @@
-
-Skip to content
-This repository
-
-    Pull requests
-    Issues
-    Gist
-
-    @vuquangtuan
-
-2
-1
-
-    233
-
-juhovan/botkit forked from howdyai/botkit
-Code
-Pull requests 10
-Pulse
-Graphs
-botkit/bot.js
-76e4ff5 3 hours ago
-@juhovan juhovan Merge branch 'master' of github:/juhovan/botkit
-@benbrown
-@juhovan
-@Kasperki
-@MiguelSR
-@anonrig
-executable file 254 lines (186 sloc) 6.77 KB
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           ______     ______     ______   __  __     __     ______
           /\  == \   /\  __ \   /\__  _\ /\ \/ /    /\ \   /\__  _\
@@ -256,7 +227,5 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
     }
 });
 
-    Status API Training Shop Blog About Pricing 
-
-    © 2016 GitHub, Inc. Terms Privacy Security Contact Help 
+ 
 
