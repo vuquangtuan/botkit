@@ -225,6 +225,27 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
     else {
         return bot.reply(message, "your parameter: " + parameter + " is not Prime number");
     }
+var weather = require('weather-js');
+
+weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, result) {
+  if(err) console.log(err);
+
+  console.log(JSON.stringify(result, null, 2));
+});
+
+controller.hears('How is the temperature in (.*)',['direct_message','mention'],function(bot,message) {
+
+    var city = message.match[1];
+    console.log(city);
+
+    weather.find({search: city, degreeType: 'C'}, function(err, result) {
+      if(err) console.log(err);
+
+      console.log(JSON.stringify(result, null, 2));
+
+      return bot.reply(message,'The temperature is ' + result[0]['current']['temperature'] + ' degree Celcius');
+    });
+
 });
 
  
