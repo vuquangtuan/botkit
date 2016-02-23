@@ -17,8 +17,7 @@ This bot demonstrates many of the core features of Botkit:
     -> http://my.slack.com/services/new/bot
   Run your bot from the command line:
     set token=<MY TOKEN>
-	
-	node bot.js
+    node bot.js
 # USE THE BOT:
   Find your bot inside Slack to send it a direct message.
   Say: "Hello"
@@ -39,6 +38,9 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
+
+
+
 if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
@@ -55,7 +57,6 @@ var controller = Botkit.slackbot({
 var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
-
 
 controller.hears(['hello','hi'],'direct_message,direct_mention,mention',function(bot, message) {
 
@@ -106,6 +107,21 @@ controller.hears(['what is my name','who am i'],'direct_message,direct_mention,m
     });
 });
 
+function isPrime(number) {
+    var start = 2;
+    while (start <= Math.sqrt(number)) {
+        if (number % start++ < 1) return false;
+    }
+    return number > 1;
+}
+
+controller.hears(['who make you','who made you'],'direct_message,direct_mention,mention',function(bot, message) {
+
+    controller.storage.users.get(message.user,function(err, user) {
+        bot.reply(message,'Metro group made me. Hihi');
+    });
+});
+
 
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
 
@@ -143,34 +159,32 @@ controller.hears(['uptime','identify yourself','who are you','what is your name'
 });
 
 controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', function(bot, message) {
-    if (message.text == 'fibonacci') {
+    if (message.text === 'fibonacci') {
         bot.reply(message, '1, 1, 2, 3, 5');
     }
 });
 
 controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention', function(bot, message) {
     var parameter = parseInt(message.match[1]);
-    
+
     var fibonacci = calculateFibonacciUpto(parameter);
-    
     if (fibonacci[fibonacci.length-1] !== parameter) {
         bot.reply(message, 'That is not a Fibonacci number!');
     }
     else {
-for (var i = 0; i < 5; i++){
+      for (var i = 0; i < 5; i++){
         fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1])
-        }
-        bot.reply(message, fibonacci.slice(fibonacci.length-5,fibonacci.length).join(', '));        
+      }
+        bot.reply(message, fibonacci.slice(fibonacci.length - 5,fibonacci.length).join(', '));
     }
 });
 
 function calculateFibonacciUpto(goal) {
     var fibonacci = [1, 1];
-    
     while (fibonacci[fibonacci.length-1] < goal) {
         fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1]);
     }
-    
+
     return fibonacci;
 }
 
@@ -203,10 +217,11 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
     var parameter = parseInt(message.match[1]);
 
     if (MathHelper.isPrime(parameter)) {
+        bot.reply(message, "your parameter: " + parameter + " is a Prime number");
         var primes = new Array();
         var number = parameter - 1;
 
-        while (primes.length < 10  && number != 0) {
+        while (primes.length < 10 && number >=0) {
 
             if (MathHelper.isPrime(number)) {
                 primes.push(number);
@@ -223,8 +238,49 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
         return bot.reply(message, reply);
     }
     else {
-        return bot.reply(message, "your parameter: " + parameter + " is not Prime number");
+        bot.reply(message, "your parameter: " + parameter + " is not Prime number");
+        var primes = new Array();
+        var number = parameter - 1;
+
+        while (primes.length < 10 && number >=0) {
+
+            if (MathHelper.isPrime(number)) {
+                primes.push(number);
+            }
+
+            number--;
+        }
+
+        var reply = "";
+        for (var i = 0; i < primes.length; i++) {
+            reply += primes[i] + " ";
+        }
+
+        return bot.reply(message, reply);
     }
+});
+
+var weather = require('weather-js');
+
+weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, result) {
+  if(err) console.log(err);
+
+  console.log(JSON.stringify(result, null, 2));
+});
+
+controller.hears('How is the temperature in (.*)',['direct_message','mention'],function(bot,message) {
+
+    var city = message.match[1];
+    console.log(city);
+
+    weather.find({search: city, degreeType: 'C'}, function(err, result) {
+      if(err) console.log(err);
+
+      console.log(JSON.stringify(result, null, 2));
+
+      return bot.reply(message,'The temperature is ' + result[0]['current']['temperature'] + ' degree Celcius');
+    });
+
 });
 
 
