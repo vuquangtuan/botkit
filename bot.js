@@ -159,7 +159,7 @@ controller.hears(['uptime','identify yourself','who are you','what is your name'
 });
 
 controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', function(bot, message) {
-    if (message.text === 'fibonacci') {
+    if (message.text == 'fibonacci') {
         bot.reply(message, '1, 1, 2, 3, 5');
     }
 });
@@ -260,6 +260,7 @@ controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],fu
     }
 });
 
+
 var weather = require('weather-js');
 
 weather.find({search: 'San Francisco, CA', degreeType: 'F'}, function(err, result) {
@@ -282,6 +283,7 @@ controller.hears('How is the temperature in (.*)',['direct_message','mention'],f
     });
 
 });
+
 
 
 
